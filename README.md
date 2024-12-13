@@ -8,12 +8,13 @@ The Terraform code for questions 1, 2, and 3 is provided in the repository. The 
 Automating the Process Using TFActions:
 
 TFActions can be implemented through Continuous Deployment pipelines to streamline and secure the deployment of infrastructure using Terraform.
-Version Control with Git: A Git repository (such as GitHub or Bitbucket) is used to store the Terraform code. The main branch represents the current state of all deployed infrastructure. When changes are required, Infrastructure Engineers create a feature branch with the proposed modifications.
-Pipeline for Pull Requests: When a Pull Request (PR) is opened to merge the feature branch into the main branch, a CI/CD pipeline is triggered. This pipeline runs the terraform plan command to generate a plan detailing the proposed infrastructure changes. The plan output is added as a comment in the PR for review.
-Code Review and Approval: The generated plan is reviewed by a Senior or Lead Engineer. Once approved, the PR is merged into the main branch.
-Pipeline for Applying Changes: Upon PR approval and merge, another pipeline is triggered to apply the reviewed changes. This pipeline executes the terraform apply command to implement the infrastructure changes.
-Secure State Management: The Terraform state is securely managed using a backend such as a GCS bucket, ensuring consistency and security throughout the process.
-CI/CD Tools: Tools like Jenkins, GitHub Actions, or any other CI/CD platform are used to implement this workflow, providing flexibility based on the team's preferences and infrastructure setup.
+- **Version Control with Git**: A Git repository (such as GitHub or Bitbucket) is used to store the Terraform code. The main branch represents the current state of all deployed infrastructure. When changes are required, Infrastructure Engineers create a feature branch with the proposed modifications.
+- **Pipeline for Pull Requests**: When a Pull Request (PR) is opened to merge the feature branch into the main branch, a CI/CD pipeline is triggered. This pipeline runs the `terraform plan` command to generate a plan detailing the proposed infrastructure changes. The plan output is added as a comment in the PR for review.
+- **Code Review and Approval**: The generated plan is reviewed by a Senior or Lead Engineer. Once approved, the PR is merged into the main branch.
+- **Pipeline for Applying Changes**: Upon PR approval and merge, another pipeline is triggered to apply the reviewed changes. This pipeline executes the `terraform apply` command to implement the infrastructure changes.
+- **Secure State Management**: The Terraform state is securely managed using a backend such as a GCS bucket, ensuring consistency and security throughout the process.
+- **CI/CD Tools**: Tools GitHub Actions, or any other CI/CD platform are used to implement this workflow, providing flexibility based on the team's preferences and infrastructure setup.
+
 
 B). GCP Concepts & Networking
 
@@ -37,12 +38,13 @@ The answer to question 2 is below.
 
 How you would optimize costs while maintaining high availability.
 
-1.Implement cross-region replication for CloudSQL and Redis to ensure data redundancy.
+1. Implement cross-region replication for CloudSQL and Redis to ensure data redundancy.
 2. Set up a standby GKE cluster in another region with minimal nodes, ready to scale during failover (DR).
 3. Consolidate multiple workloads behind a single Cloud Load Balancer to reduce the cost of maintaining separate load balancers for each service.
 4. Configure GKE as a regional cluster instead of a zonal cluster to improve high availability without additional costs for failover infrastructure.
 5. Use GKE auto-scaling to dynamically adjust the number of nodes based on workload demand, minimizing costs during low traffic periods.
 6. Deploy the GKE cluster in multiple zones within the same region to handle zonal failures while avoiding inter-region latency and costs.
+
 
 C). CI/CD & GitHub Actions
 
