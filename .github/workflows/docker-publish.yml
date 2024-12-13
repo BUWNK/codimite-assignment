@@ -51,6 +51,9 @@ jobs:
         gcloud auth configure-docker asia-southeast1-docker.pkg.dev
         docker build -t asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest .
         echo 'Docker image built successfully.'
+        echo 'Pushing Docker image to GCR...'
+        docker push asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest
+        echo 'Docker image pushed to GCR successfully.'
 
     - name: Install Trivy
       run: |
@@ -64,9 +67,3 @@ jobs:
         docker pull asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest
         trivy image asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest
         echo 'Trivy scan completed.'
-
-    - name: Push Docker Image to GCR
-      run: |
-        echo 'Pushing Docker image to GCR...'
-        docker push asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest
-        echo 'Docker image pushed to GCR successfully.'
