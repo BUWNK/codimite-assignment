@@ -56,10 +56,7 @@ jobs:
         echo 'Docker image pushed to GCR successfully.'
 
     - name: Install Trivy
-      run: |
-        echo 'Installing Trivy...'
-        curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.34.0/trivy_0.34.0_Linux-x86_64.tar.gz | tar xz -C /usr/local/bin
-        echo 'Trivy installed successfully.'
+      uses: aquasecurity/setup-trivy@v0.2.2
 
     - name: Scan Docker image with Trivy
       run: |
