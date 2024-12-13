@@ -23,16 +23,17 @@ The answer to question 2 is below.
 
  How You Would Secure the Setup
 
-1.By placing GKE, Redis, and CloudSQL in private subnets, these services are shielded from direct internet exposure. The public-facing CLB acts as a controlled entry point, forwarding traffic only to GKE through secure, predefined rules.
-2.Implement RBAC (Role-Based Access Control) for the GKE cluster to define roles and permissions for users, ensuring they only have access to the necessary resources.
-3.Allow access to the GKE control plane only through a VPN connection or a private endpoint.
-4.Firewall rules restrict inbound and outbound traffic to only necessary IPs, protocols, and ports.
-5.Use Service Accounts with minimal permissions for applications within the GKE cluster. Make sure each service has access only to the resources it needs, using IAM roles and policies.
-6.Enable VPC Flow Logs to monitor network traffic for suspicious activities and potential misconfigurations.
-7.Private Google Access is enabled for your private subnet, allowing GKE nodes to access Google Cloud APIs (like CloudSQL) through private IPs.
-8.Ensure that all communication between services (e.g., GKE to CloudSQL and Redis) is encrypted using TLS or SSL.
-9.Enable encryption at rest for CloudSQL and Redis, and ensure that the appropriate keys are managed securely via Cloud Key Management.
-10.Enable audit logs for both CloudSQL and Redis to track and monitor access and configuration changes.
+1. By placing GKE, Redis, and CloudSQL in private subnets, these services are shielded from direct internet exposure. The public-facing CLB acts as a controlled entry point, forwarding traffic only to GKE through secure, predefined rules.
+2. Implement RBAC (Role-Based Access Control) for the GKE cluster to define roles and permissions for users, ensuring they only have access to the necessary resources.
+3. Allow access to the GKE control plane only through a VPN connection or a private endpoint.
+4. Firewall rules restrict inbound and outbound traffic to only necessary IPs, protocols, and ports.
+5. Use Service Accounts with minimal permissions for applications within the GKE cluster. Make sure each service has access only to the resources it needs, using IAM roles and policies.
+6. Enable VPC Flow Logs to monitor network traffic for suspicious activities and potential misconfigurations.
+7. Private Google Access is enabled for your private subnet, allowing GKE nodes to access Google Cloud APIs (like CloudSQL) through private IPs.
+8. Ensure that all communication between services (e.g., GKE to CloudSQL and Redis) is encrypted using TLS or SSL.
+9. Enable encryption at rest for CloudSQL and Redis, and ensure that the appropriate keys are managed securely via Cloud Key Management.
+10. Enable audit logs for both CloudSQL and Redis to track and monitor access and configuration changes.
+
 
 How you would optimize costs while maintaining high availability.
 
