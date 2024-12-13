@@ -1,0 +1,72 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.21.3'
+
+    - name: Install dependencies
+      run: |
+        echo 'Installing dependencies...'
+        npm install
+        echo 'Dependencies installed successfully.'
+
+    - name: Lint code
+      run: |
+        echo 'Running linting...'
+        npm run lint
+        echo 'Linting completed successfully.'
+
+    - name: Run tests
+      run: |
+        echo 'Running tests...'
+        npm test
+        echo 'All tests completed successfully.'
+
+    - name: Install the gcloud CLI
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{ secrets.GOOGLE_PROJECT }}
+        service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        export_default_credentials: true
+
+    - name: Build Docker Image
+      env:
+        GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
+      run: |
+        echo 'Building Docker image...'
+        gcloud auth configure-docker asia-southeast1-docker.pkg.dev
+        docker build -t asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest .
+        echo 'Docker image built successfully.'
+
+    - name: Install Trivy
+      run: |
+        echo 'Installing Trivy...'
+        curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.34.0/trivy_0.34.0_Linux-x86_64.tar.gz | tar xz -C /usr/local/bin
+        echo 'Trivy installed successfully.'
+
+    - name: Scan Docker image with Trivy
+      run: |
+        echo 'Scanning Docker image with Trivy...'
+        docker pull asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest
+        trivy image asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest
+        echo 'Trivy scan completed.'
+
+    - name: Push Docker Image to GCR
+      run: |
+        echo 'Pushing Docker image to GCR...'
+        docker push asia-southeast1-docker.pkg.dev/$GOOGLE_PROJECT/codimite-gcr/nodejs_app:latest
+        echo 'Docker image pushed to GCR successfully.'
